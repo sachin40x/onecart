@@ -6,15 +6,16 @@ import Lists from './pages/Lists'
 import Orders from './pages/Orders'
 import Login from './pages/Login'
 import { adminDataContext } from './context/AdminContext'
-  import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import Chatbot from './component/Chatbot'
 
 function App() {
-  let {adminData} = useContext(adminDataContext)
+  let {adminData, loading} = useContext(adminDataContext)
   return (
 
     <>
       <ToastContainer />
-    {!adminData ? <Login/> : <>
+    {loading ? <div className='w-[100vw] h-[100vh] flex items-center justify-center text-white'>Loading...</div> : !adminData ? <Login/> : <>
 
       <Routes>
         <Route path='/' element={<Home/>}/>
@@ -25,6 +26,7 @@ function App() {
       </Routes>
       </>
       }
+      {adminData && <Chatbot/>}
     </>
   )
 }

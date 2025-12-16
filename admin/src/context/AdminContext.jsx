@@ -5,18 +5,22 @@ import axios from 'axios'
 export const adminDataContext = createContext()
 function AdminContext({children}) {
     let [adminData,setAdminData] = useState(null)
+    const [loading, setLoading] = useState(true)
     let {serverUrl} = useContext(authDataContext)
 
 
     const getAdmin = async () => {
+      setLoading(true)
       try {
            let result = await axios.get(serverUrl + "/api/user/getadmin",{withCredentials:true})
 
       setAdminData(result.data)
       console.log(result.data)
+      setLoading(false)
       } catch (error) {
         setAdminData(null)
         console.log(error)
+        setLoading(false)
       }
     }
 
@@ -26,7 +30,7 @@ function AdminContext({children}) {
 
 
     let value = {
-adminData,setAdminData,getAdmin
+adminData,setAdminData,getAdmin,loading
     }
   return (
     <div>
